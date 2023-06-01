@@ -79,7 +79,8 @@ const Base = () => {
                         }
                     )
                     if (responseGet !== 'fail') {
-                        setImageUrls(responseGet.data.response);
+                        // setImageUrls(responseGet.data.response ? responseGet.data.response : []);
+                        setImageUrls([]);
                     }
                 } catch (error) {
                     console.log(error);
@@ -101,7 +102,7 @@ const Base = () => {
                     )
 
                     if (responseByUser.data.response !== 'fail') {
-                        setImageUrls(responseByUser.data.response);
+                        setImageUrls(responseByUser.data.response ? responseByUser.data.response : []);
                     }
                     else {
                         setImageUrls([]);
@@ -528,7 +529,7 @@ const Base = () => {
                 <Col sm={6} className='flex justify-center items-center'>
                     <div className='box flex items-center justify-center' style={{ width: '30vw', height: '30vw' }}>
                         {(!bLoadingFlag && picRoute !== '') && (
-                            <img style={{ width: '29vw', height: '29vw' }} src={constants.baseUrl + '/images/' + picRoute}></img>
+                            <img style={{ width: '29vw', height: '29vw' }} src={constants.baseUrl + picRoute}></img>
                         )}
                         {(!bLoadingFlag && picRoute === '') && (
                             <div style={{ width: '29vw', height: '29vw' }}></div>
@@ -556,7 +557,7 @@ const Base = () => {
                     </Col>
                     <Col sm={6} >
                         <h2>
-                            <span className='text-white fs-50 fw-500'>NFT Marketplace with everything </span>
+                            <span className='text-white fs-50 fw-500'>AI Image Generating </span>
                             <span className='text-pink fs-50 f2-500'>for everyone</span>
                         </h2>
                     </Col>

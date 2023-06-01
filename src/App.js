@@ -1,7 +1,7 @@
 import Land from "./components/land.component";
 import './App.css';
 import Base from './components/base.component'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 import React from 'react'
 import axios from 'axios'
@@ -28,11 +28,15 @@ function App() {
   return (
 
     <UserContext.Provider value={{ imgUrls, setImageUrls, signFlag, setSignFlag, useremail, setUserEmail }}>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Routes>
-          <Route path="/base" element={<Base />} />
-          <Route path="/home" element={<Land />} />
-          <Route path="/*" element={<Land />} />
+          <Route exact={true} path="/base" element={<Base />} />
+          <Route exact={true} path="/home" element={<Land />} />
+          <Route exact={true} path="/"  element={<Navigate to="/home" />} />
+          <Route exact={true} path="*"  element={<Navigate to="/home" />} />
+          
+          {/* <Route exact path="/"  element={<Land />} />
+          <Route path="/base" element={<Base />} /> */}
         </Routes>
       </Router>
     </UserContext.Provider >

@@ -48,15 +48,15 @@ const Land = () => {
                         </Col>
                         <Col sm={6} className='flex justify-end items-center'>
 
-                            {!below800 && <div className="position-relative">
+                            {/* {!below800 && <div className="position-relative">
                                 <i className="bi bi-bag text-white fs-24 ml-50"></i>
                                 <span className="fs-10 position-absolute top-0 start-100 translate-middle badge rounded-pill border border-light bg-success">
                                     0
                                     <span className="visually-hidden">unread messages</span>
                                 </span>
-                            </div>}
+                            </div>} */}
 
-                            {!below800 && <i className="bi bi-search text-white fs-24 ml-50"></i>}
+                            {/* {!below800 && <i className="bi bi-search text-white fs-24 ml-50"></i>} */}
 
                             <Button className='ml-50 w-150' variant='success' color='success' size='lg' onClick={handleClick}>
                                 <span className='fs-16'>
@@ -102,7 +102,7 @@ const Land = () => {
                     </Col>
                     <Col sm={6} >
                         <h2>
-                            <span className='text-white fs-50 fw-500'>NFT Marketplace with everything </span>
+                            <span className='text-white fs-50 fw-500'>AI Image Generating </span>
                             <span className='text-pink fs-50 f2-500'>for everyone</span>
                         </h2>
                     </Col>
