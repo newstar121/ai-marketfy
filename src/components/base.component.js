@@ -369,7 +369,7 @@ const Base = () => {
     }
 
     const onDelete = async (imgUrl) => {
-        const filename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
+        const filename = imgUrl.photopath;
         if (window.confirm('Are you sure you want to remove this item?')) {
             try {
                 const removeResponse = await axios.post(
@@ -415,25 +415,26 @@ const Base = () => {
                     onMouseEnter={() => setShowDelete(true)}
                     onMouseLeave={() => setShowDelete(false)}
                 >
-                    {showDelete && (
-                        <button
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                right: 0,
-                                backgroundColor: 'red',
-                                color: 'white',
-                                border: 'none',
-                                borderRadius: '50%',
-                                padding: '5px',
-                                cursor: 'pointer',
-                            }}
-                            onClick={() => onDelete(imgUrls[i])}
-                        >
-                            X
-                        </button>
-                    )}
-                    <img style={{ width: '10vw', height: '10vw' }} src={constants.baseUrl + '/images/' + imgUrls[i].photopath}></img>
+                    {/* {showDelete && ( */}
+                    <button
+                        style={{
+                            position: 'absolute',
+                            marginTop: '-10vw',
+                            marginRight: '-10vw',
+                            backgroundColor: 'red',
+                            color: 'white',
+                            border: 'none',
+                            cursor: 'pointer',
+                        }}
+                        onClick={() => onDelete(imgUrls[i])}
+                    >
+                        X
+                    </button>
+                    {/* )} */}
+                    <img
+                        onMouseEnter={() => setShowDelete(true)}
+                        onMouseLeave={() => setShowDelete(false)}
+                        style={{ width: '10vw', height: '10vw' }} src={constants.baseUrl + '/images/' + imgUrls[i].photopath}></img>
                 </Col>
             )
             if (i % 6 == 5) {
