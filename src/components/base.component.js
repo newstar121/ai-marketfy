@@ -64,6 +64,8 @@ const Base = () => {
     const [bLoadingFlag, setLoadingFlag] = useState(false)
     const [imageData, setImageData] = useState('')
 
+    const [showDelete, setShowDelete] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             if (signFlag === false) {
@@ -131,7 +133,7 @@ const Base = () => {
             setSignFlag(false)
         }
     }, [])
-    
+
     const onGenerate = async () => {
         if (about === '') {
             toast.error("Main Prompt is Empty.");
@@ -366,16 +368,75 @@ const Base = () => {
         }
     }
 
+    const onDelete = async (imgUrl) => {
+        const filename = imgUrl.substring(imgUrl.lastIndexOf('/') + 1);
+        if (window.confirm('Are you sure you want to remove this item?')) {
+            try {
+                const removeResponse = await axios.post(
+                    constants.baseUrl + '/api/auth/removeimage',
+                    {
+                        filename: filename
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                const responseByUser = await axios.post(
+                    constants.baseUrl + '/api/auth/getrecentimagesbyuser',
+                    {
+                        email: useremail
+                    },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                if (responseByUser.data.response !== 'fail') {
+                    setImageUrls(responseByUser.data.response);
+                }
+                else {
+                    setImageUrls([]);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     useEffect(() => {
         let result = []
         let row = []
-        for(let i = 0 ; i < imgUrls.length; i ++) {
+        for (let i = 0; i < imgUrls.length; i++) {
             row.push(
-                <Col sm={2} className='flex items-center justify-around'>
+                <Col sm={2} className='flex items-center justify-around'
+                    onMouseEnter={() => setShowDelete(true)}
+                    onMouseLeave={() => setShowDelete(false)}
+                >
+                    {showDelete && (
+                        <button
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                backgroundColor: 'red',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '50%',
+                                padding: '5px',
+                                cursor: 'pointer',
+                            }}
+                            onClick={() => onDelete(imgUrls[i])}
+                        >
+                            X
+                        </button>
+                    )}
                     <img style={{ width: '10vw', height: '10vw' }} src={constants.baseUrl + '/images/' + imgUrls[i].photopath}></img>
                 </Col>
             )
-            if(i % 6 == 5) {
+            if (i % 6 == 5) {
                 result.push(
                     <Row className='mb-20 w-full'>
                         {row.map((element) => {
@@ -386,7 +447,7 @@ const Base = () => {
                 row = []
             }
         }
-        if(row.length > 0) {
+        if (row.length > 0) {
             result.push(
                 <Row className='w-full'>
                     {row}
@@ -395,7 +456,7 @@ const Base = () => {
         }
         setImageData(result);
     }, [imgUrls])
-    
+
 
     return (
         <div className='flex flex-column bottom-bg'>
